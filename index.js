@@ -2,7 +2,7 @@
 // https://github.com/visionmedia/css-parse/pull/49#issuecomment-30088027
 var commentre = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//g
 
-module.exports = function(css, options){
+var cssParse = function(css, options){
   options = options || {};
   options.position = options.position === false ? false : true;
 
@@ -503,6 +503,18 @@ module.exports = function(css, options){
 
   return stylesheet();
 };
+
+
+
+if((this || (0,eval)('this')).document){
+  //in browser
+  define([], function(){
+    return cssParse
+  });
+} else {
+  //in NodeJs
+  module.exports = cssParse;
+}
 
 /**
  * Trim `str`.
